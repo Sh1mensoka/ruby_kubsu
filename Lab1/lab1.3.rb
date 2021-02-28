@@ -73,28 +73,43 @@ def special_multiply(input)
 	multiplication_result
 end
 
-print "Введите число для обработки: "
-input_num = $stdin.gets.chomp.to_i
+def show_help()
+	puts "Возможные команды:
+	0: вывод суммы цифр числа
+	1: вывод наименьшей цифры числа
+	2: вывод наибольшей цифры числа
+	3: вывод произведения цифр числа
+	4: вывод суммы простых делителей числа
+	5: вывод количества нечетных цифр числа, больших 3
+	6: вывод произведения делителей, удовлетворяющих условию
+	-h: вывод помощи"
+end
 
-puts "Hello World!" if ARGV.length == 0 
-
-for i in 0..ARGV.length - 1
-	case ARGV[i]
-	when "0"
-		puts "Сумма цифр числа: #{num_sum(input_num)}"
-	when "1"
-		puts "Наименьшая цифра числа: #{search_min(input_num)}"
-	when "2"
-		puts "Наибольшая цифра числа: #{search_max(input_num)}"	
-	when "3"
-		puts "Произведение цифр числа: #{num_multiplication(input_num)}"
-	when "4"
-		puts "Сумма простых делителей числа: #{simple_div(input_num)}"
-	when "5"
-		puts "Количество нечетных цифр числа, больших 3: #{even_num_more_than_3(input_num)}"
-	when "6"
-		puts "Произведение делителей, удовлетворяющих условию: #{special_multiply(input_num)}"
-	else
-		puts "Некорректная команда!"
+if ARGV.length == 0
+	puts "Hello World!"
+elsif ARGV[0] == "-h"
+	show_help()
+else 
+	print "Введите число для обработки: "
+	input_num = $stdin.gets.chomp.to_i
+	for i in 0..ARGV.length - 1
+		case ARGV[i]
+		when "0"
+			puts "Сумма цифр числа: #{num_sum(input_num)}"
+		when "1"
+			puts "Наименьшая цифра числа: #{search_min(input_num)}"
+		when "2"
+			puts "Наибольшая цифра числа: #{search_max(input_num)}"	
+		when "3"
+			puts "Произведение цифр числа: #{num_multiplication(input_num)}"
+		when "4"
+			puts "Сумма простых делителей числа: #{simple_div(input_num)}"
+		when "5"
+			puts "Количество нечетных цифр числа, больших 3: #{even_num_more_than_3(input_num)}"
+		when "6"
+			puts "Произведение делителей, удовлетворяющих условию: #{special_multiply(input_num)}"
+		else
+			show_help()
+		end
 	end
 end
