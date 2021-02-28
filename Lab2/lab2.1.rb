@@ -1,7 +1,7 @@
 def read_arr(arr, len)
 	for i in 0..len - 1 do
 		puts "Введите число: "
-		arr.unshift($stdin.gets.chomp.to_i)
+		arr.insert(arr.length, $stdin.gets.chomp.to_i)
 	end
 	arr
 end
