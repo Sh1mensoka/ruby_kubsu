@@ -1,3 +1,11 @@
+def read_arr(arr, len)
+	for i in 0..len - 1 do
+		puts "Введите число: "
+		arr.push($stdin.gets.chomp.to_i)
+	end
+	arr
+end
+
 def find_min(arr)
 	arr.min
 end
@@ -18,16 +26,10 @@ def elem_mult(arr)
 	mult
 end
 
+len = ARGV[0].to_i
+
 mas = Array.new
-puts "Введите число: "
-num = gets
-until num == "\n"
-	if num != "\n"
-		mas.push(num.to_i)
-	end
-	puts "Введите число: "
-	num = gets
-end
+read_arr(mas, len)
 puts mas
 puts find_min(mas)
 puts find_max(mas)
