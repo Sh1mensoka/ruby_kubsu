@@ -1,32 +1,20 @@
 def find_min(arr)
-	min = arr.first
-	arr.each do |x|
-		min = x if x < min
-	end
-	min 
+	arr.min
 end
 
 def find_max(arr)
-	max = arr.first
-	arr.each do |x|
-		max = x if x > max
-	end
-	max
+	arr.max
 end
 
 def elem_sum(arr)
 	sum = 0
-	arr.each do |x|
-		sum += x
-	end
+	arr.cycle(1) {|x| sum += x}
 	sum
 end
 
 def elem_mult(arr)
 	mult = 1
-	arr.each do |x|
-		mult *= x
-	end
+	arr.cycle(1) {|x| mult *= x}
 	mult
 end
 
