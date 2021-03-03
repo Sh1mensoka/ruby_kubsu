@@ -7,6 +7,13 @@ def read_arr(arr,len)
 	arr
 end
 
+def read_from_file(arr, addr)
+	file = File.new("#{addr}", "r").each do |line|
+		arr << line.to_i
+	end
+	arr
+end
+
 def find_min(arr)
 	arr.min
 end
@@ -27,10 +34,10 @@ def elem_mult(arr)
 	mult
 end
 
-len = ARGV[0].to_i
+#len = ARGV[0].to_i
 
 mas = Array.new
-read_arr(mas, len)
+read_from_file(mas, "./input.txt")
 puts mas
 puts find_min(mas)
 puts find_max(mas)
