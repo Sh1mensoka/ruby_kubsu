@@ -1,8 +1,8 @@
-def read_arr(arr,len)
+def read_arr(arr, len)
 	for i in 0..len - 1 do
 		puts "Введите число: "
 		num = $stdin.gets.chomp.to_i
-		arr.insert(arr.length, num, num)
+		arr << num
 	end
 	arr
 end
@@ -34,12 +34,11 @@ def elem_mult(arr)
 	mult
 end
 
-#len = ARGV[0].to_i
-
+method = ARGV[0]
 mas = Array.new
-read_from_file(mas, "./input.txt")
-puts mas
-puts find_min(mas)
-puts find_max(mas)
-puts elem_sum(mas)
-puts elem_mult(mas)
+if ARGV[0].end_with?(".txt")
+	puts read_from_file(mas, ARGV[0]) 
+else
+	puts read_arr(mas, ARGV[0].chomp.to_i)
+end
+# "./input.txt"
