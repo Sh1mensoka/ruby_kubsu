@@ -37,7 +37,16 @@ def push_to_end(arr)
 	puts "Измененный массив: #{arr.inspect}"
 end
 
+def max_in_interval(arr, a, b)
+	max = arr[a];
+	for i in arr[a, b]
+		max = i if i > max
+	end
+	puts "Максимальный элемент в интервале [#{a}, #{b}]: #{max}"
+end
+
 arr = Array.new
 puts "Введите количество элементов в массиве:"
 max_elems(read_arr(arr, gets.chomp.to_i))
 push_to_end(arr)
+max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
