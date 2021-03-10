@@ -45,8 +45,21 @@ def max_in_interval(arr, a, b)
 	puts "Максимальный элемент в интервале [#{a}, #{b}]: #{max}"
 end
 
+def get_indexes(arr)
+	puts "Индексы элементов, меньших своего левого соседа:"
+	counter = 0
+	for i in 1..arr.length - 1
+		if arr[i] < arr[i - 1]
+			counter += 1
+			puts i
+		end
+	end 
+	puts "Количество таких элементов:\n#{counter}"
+end
+
 arr = Array.new
 puts "Введите количество элементов в массиве:"
 max_elems(read_arr(arr, gets.chomp.to_i))
 push_to_end(arr)
 max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
+get_indexes(arr)
