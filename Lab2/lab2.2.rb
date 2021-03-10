@@ -57,9 +57,32 @@ def get_indexes(arr)
 	puts "Количество таких элементов:\n#{counter}"
 end
 
+def build_list(arr)
+
+	def check_simple(del)
+		for i in 2..del / 2
+			if del % i == 0
+				false
+			end
+		end
+		true
+	end
+
+	mas = Array.new
+	for i in arr[0, arr.length - 1]
+		for j in 2..i / 2
+			if i % j == 0 && check_simple(j) && !mas.include?(j)
+				mas << j
+			end
+		end
+	end
+	puts "Список положительных простых делителей: #{mas}"
+end
+
 arr = Array.new
 puts "Введите количество элементов в массиве:"
 max_elems(read_arr(arr, gets.chomp.to_i))
 push_to_end(arr)
 max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
 get_indexes(arr)
+build_list(arr)
