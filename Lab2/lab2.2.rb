@@ -8,53 +8,23 @@ def read_arr(arr, len)
 end
 
 def max_elems(arr)
-	max = arr[0]
-	counter = 0
-	arr.each do |x|
-		if x >= max
-			max = x
-			counter = 0
-		else
-			counter += 1
-		end
-	end
-	puts "Количество элементов, расположенных после последнего максимального:
-#{counter}"
+	puts "Количество элементов, расположенных после последнего максимального: #{arr.drop(arr.rindex(arr.max) + 1).length}"
 end
 
 def push_to_end(arr)
-	min = arr[0]
-	ind = 0
-	for i in 0..arr.length - 1
-		if arr[i] < min
-			min = arr[i]
-			ind = i
-		end
-	end
-	for i in 0..ind - 1
-		arr.push(arr.shift)
-	end
+	mas = arr.select {|x| arr.index(x) < arr.index(arr.min)}
+	arr.select! {|x| arr.index(x) >= arr.index(arr.min)}.concat(mas)
 	puts "Измененный массив: #{arr.inspect}"
 end
 
 def max_in_interval(arr, a, b)
-	max = arr[a];
-	for i in arr[a, b]
-		max = i if i > max
-	end
-	puts "Максимальный элемент в интервале [#{a}, #{b}]: #{max}"
+	puts "Максимальный элемент в интервале [#{a}, #{b}]: #{arr[a, b].max}"
 end
 
 def get_indexes(arr)
-	puts "Индексы элементов, меньших своего левого соседа:"
-	counter = 0
-	for i in 1..arr.length - 1
-		if arr[i] < arr[i - 1]
-			counter += 1
-			puts i
-		end
-	end 
-	puts "Количество таких элементов:\n#{counter}"
+	puts "Индексы элементов, меньших своего левого соседа: "
+	arr.select {|x| puts arr.index(x) if arr[arr.index(x)] < arr[arr.index(x) - 1]}
+	puts "Количество таких элементов: #{arr.select {|x| arr[arr.index(x)] < arr[arr.index(x) - 1]}.length}"
 end
 
 def build_list(arr)
@@ -85,4 +55,4 @@ max_elems(read_arr(arr, gets.chomp.to_i))
 push_to_end(arr)
 max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
 get_indexes(arr)
-build_list(arr)
+# build_list(arr)
