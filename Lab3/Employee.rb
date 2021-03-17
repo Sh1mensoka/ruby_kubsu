@@ -62,7 +62,7 @@ class Employee
 	end
 
 	def tel=(tel)
-		@tel = tel
+		@tel = Employee.tel_convert(tel)
 	end
 
 	def addr=(addr)
@@ -70,7 +70,7 @@ class Employee
 	end
 
 	def email=(email)
-		@email = email
+		@email = Employee.email_convert(email)
 	end
 
 	def pass=(pass)
@@ -96,6 +96,43 @@ class Employee
 	def to_s
 		"ФИО: #{@fio}\nГод рождения: #{@year}\nТелефон: #{@tel}\nАдрес: #{@addr}\nE-mail: #{@email}\nПаспортные данные: #{pass}
 Специальность: #{@spec}\nСтаж работы: #{@exp}\nПредыдущее место работы: #{@workplace}\nЗарплата на предыдущем месте работы: #{@sal}"	
+	end
+
+	def self.tel_check?(tel)
+		if tel =~ /^(8|\+7)([\W]*\d){10}$/ 
+			true
+		else 
+			false
+		end
+	end
+
+	def self.tel_convert(tel)
+		if !self.tel_check?(tel)
+			raise "Некорректный номер телефона!"
+		else
+			str = ""
+			tel.scan(/\d/){|x| str.concat(x)}
+			str[0] = '7'
+			str.insert(1, '-')
+			str.insert(5, '-')
+			str
+		end
+	end
+
+	def self.check_email?(email)
+		if email =~ /^[\w]*+@[\w]*+\.+[A-Za-z]{2,3}$/
+			true
+		else
+			false
+		end
+	end
+
+	def self.email_convert(email)
+		if !self.check_email?(email)
+			raise "Некорректный адрес электронной почты!" 
+		else
+			email.downcase
+		end
 	end
 
 end
