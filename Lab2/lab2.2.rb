@@ -86,13 +86,20 @@ def search_rational(str)
 	min
 end
 
+def search_max_num(str)
+	max = 0
+	str.scan(/\d+/) {|x| max = x.length if x.length > max}
+	max
+end
+
 # puts str_to_int("22 5 17 8 27 5 12")
 # puts ru_symb("Съешь bulku")
 # puts latin_palindrome("Съешь buLKu")
 # puts search_data ("Сегодня, то есть today 27.03.2021")
 # puts search_date ("31 марта 2021")
 # puts search_float("3.14 - число пи, а 2.17 - просто число")
-puts search_rational("3/7 more than 5/7")
+# puts search_rational("3/7 more than 5/7")
+puts search_max_num("873 часа 3755 студентов писали 2 строки кода")
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
 # max_elems(read_arr(arr, gets.chomp.to_i))
