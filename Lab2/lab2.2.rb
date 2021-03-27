@@ -73,11 +73,18 @@ def search_date(str)
 	str.scan(/\d{2} [А-Яа-я]{4,} \d{4}/).inspect
 end
 
+def search_float(str)
+	max = 0
+	str.scan(/\d+.\d+/){|x| max = x.to_f if x.to_f > max}
+	max
+end
+
 # puts str_to_int("22 5 17 8 27 5 12")
 # puts ru_symb("Съешь bulku")
 # puts latin_palindrome("Съешь buLKu")
 # puts search_data ("Сегодня, то есть today 27.03.2021")
-puts search_date ("31 марта 2021")
+# puts search_date ("31 марта 2021")
+puts search_float("3.14 - число пи, а 2.17 - просто число")
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
 # max_elems(read_arr(arr, gets.chomp.to_i))
