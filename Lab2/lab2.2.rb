@@ -92,11 +92,21 @@ def search_max_num(str)
 	max
 end
 
-def read_from_file()
+def sort_by_length()
 	mas = Array.new()
 	file1 = File.new("input.txt", "r").each do |line|
 		mas << line
 	end
+	file1.close
+	mas.sort!{|x, y| y.length <=> x.length}.inspect
+end
+
+def sort_by_words()
+	mas = Array.new
+	file1 = File.new("input.txt", "r").each do |line|
+		mas << line.split(" ")
+	end
+	file1.close
 	mas.sort!{|x, y| y.length <=> x.length}.inspect
 end
 
@@ -107,7 +117,8 @@ end
 # puts search_date ("31 марта 2021")
 # puts search_float("3.14 - число пи, а 2.17 - просто число")
 # puts search_rational("-3/7 more than 5/7")
-puts read_from_file
+# puts sort_by_length
+puts sort_by_words
 # puts search_max_num("873 часа 3755 студентов писали 2 строки кода")
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
