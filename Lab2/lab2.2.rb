@@ -54,7 +54,13 @@ def str_to_int(str)
 	mas.each{|x| mas[mas.index(x)] = x.to_i}.max
 end
 
-puts str_to_int("22 5 17 8 27 5 12")
+
+def ru_symb(str)
+	str.count("/А-Яа-я/")
+end
+
+# puts str_to_int("22 5 17 8 27 5 12")
+puts ru_symb("Съешь bulku")
 
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
