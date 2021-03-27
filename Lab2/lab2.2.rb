@@ -64,10 +64,15 @@ def latin_palindrome(str)
 	str.scan(/[a-z]/) {|x| latin_str.concat(x)}
 	latin_str.eql?(latin_str.reverse)
 end
+
+def search_data(str)
+	str.scan(/\d{2}.\d{2}.\d{4}/).inspect
+end
+
 # puts str_to_int("22 5 17 8 27 5 12")
 # puts ru_symb("Съешь bulku")
-puts latin_palindrome("Съешь buLKu")
-
+# puts latin_palindrome("Съешь buLKu")
+puts search_data ("Сегодня, то есть today 27.03.2021")
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
 # max_elems(read_arr(arr, gets.chomp.to_i))
