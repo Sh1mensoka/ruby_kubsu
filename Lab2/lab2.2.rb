@@ -49,10 +49,17 @@ def build_list(arr)
 	puts "Список положительных простых делителей: #{mas}"
 end
 
-arr = Array.new
-puts "Введите количество элементов в массиве:"
-max_elems(read_arr(arr, gets.chomp.to_i))
-push_to_end(arr)
-max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
-get_indexes(arr)
+def str_to_int(str)
+	mas = str.split(" ")
+	mas.each{|x| mas[mas.index(x)] = x.to_i}.max
+end
+
+puts str_to_int("22 5 17 8 27 5 12")
+
+# arr = Array.new
+# puts "Введите количество элементов в массиве:"
+# max_elems(read_arr(arr, gets.chomp.to_i))
+# push_to_end(arr)
+# max_in_interval(arr, gets.chomp.to_i, gets.chomp.to_i)
+# get_indexes(arr)
 # build_list(arr)
