@@ -59,8 +59,14 @@ def ru_symb(str)
 	str.count("/А-Яа-я/")
 end
 
+def latin_palindrome(str)
+	latin_str = ""
+	str.scan(/[a-z]/) {|x| latin_str.concat(x)}
+	latin_str.eql?(latin_str.reverse)
+end
 # puts str_to_int("22 5 17 8 27 5 12")
-puts ru_symb("Съешь bulku")
+# puts ru_symb("Съешь bulku")
+puts latin_palindrome("Съешь buLKu")
 
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
