@@ -54,7 +54,7 @@ class Employee
 	end
 
 	def fio=(fio)
-		@fio = fio
+		@fio = Employee.fio_convert(fio)
 	end
 
 	def year=(year)
@@ -147,7 +147,27 @@ class Employee
 		if !self.fio_check?(fio)
 			raise "Некорректные имя фамилия отчество!"
 		else
-			# TODO
+			temp = fio.downcase.split(/(-)/).map{|x| x.split(" ")}.flatten.map{|x| x.capitalize}
+			i = 0
+			result = ""
+			while i < temp.size
+				case temp[i+1]
+				when "-"
+					result << temp[i] << temp[i+1]
+					i += 2
+				else
+					if i == temp.size - 1
+						result << temp[i]
+					else
+						result << temp[i] << " "
+					end
+				i += 1
+				end
+			end
+			if result.count(" ") > 2
+				result[result.rindex(" ") + 1..result.size] = result[result.rindex(" ") + 1..result.size].downcase
+			end
+			result
 		end
 	end
 
