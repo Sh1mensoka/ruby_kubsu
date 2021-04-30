@@ -1,6 +1,8 @@
 class Employee
 
-	def initialize(fio, year, tel, addr, email, pass, spec, exp, workplace, sal)
+	attr_accessor :fio, :year, :tel, :addr, :email, :pass, :spec, :exp, :workplace, :post, :sal
+
+	def initialize(fio, year, tel, addr, email, pass, spec, exp, *args)
 		self.fio= fio
 		self.year= year
 		self.tel= tel
@@ -9,48 +11,14 @@ class Employee
 		self.pass= pass
 		self.spec= spec
 		self.exp= exp
-		self.workplace= workplace
-		self.sal= sal
-	end
+		self.workplace= ""
+		self.post= ""
+		self.sal= ""
 
-	def fio
-		@fio
-	end
-
-	def year
-		@year
-	end
-
-	def tel
-		@tel
-	end
-
-	def addr
-		@addr
-	end
-
-	def email
-		@email
-	end
-
-	def pass
-		@pass
-	end
-
-	def spec
-		@spec
-	end
-
-	def exp
-		@exp
-	end
-
-	def workplace
-		@workplace
-	end
-
-	def sal
-		@sal
+		if args.size > 0
+			self.workplace, self.post, self.sal = args
+		end
+		
 	end
 
 	def fio=(fio)
@@ -65,10 +33,6 @@ class Employee
 		@tel = Employee.tel_convert(tel)
 	end
 
-	def addr=(addr)
-		@addr = addr
-	end
-
 	def email=(email)
 		@email = Employee.email_convert(email)
 	end
@@ -77,29 +41,14 @@ class Employee
 		@pass = Employee.pass_convert(pass)
 	end
 
-	def spec=(spec)
-		@spec = spec
-	end
-
-	def exp=(exp)
-		@exp = exp
-	end
-
-	def workplace=(workplace)
-		@workplace = workplace
-	end
-
-	def sal=(sal)
-		@sal = sal
-	end
-
 	def to_s
-		"ФИО: #{@fio}\nГод рождения: #{@year}\nТелефон: #{@tel}\nАдрес: #{@addr}\nE-mail: #{@email}\nПаспортные данные: #{pass}
-Специальность: #{@spec}\nСтаж работы: #{@exp}\nПредыдущее место работы: #{@workplace}\nЗарплата на предыдущем месте работы: #{@sal}"	
+		"ФИО: #{@fio}\nГод рождения: #{@year}\nТелефон: #{@tel}\nАдрес: #{@addr}\nE-mail: #{@email}\nПаспортные данные: #{@pass}
+Специальность: #{@spec}\nСтаж работы: #{@exp}\nПредыдущее место работы: #{@workplace}\nДолжность на предыдущем месте работы: #{@post}
+Зарплата на предыдущем месте работы: #{@sal}"	
 	end
 
 	def self.tel_check?(tel)
-		if tel =~ /^(8|\+7)([\W]*\d){10}$/ 
+		if tel =~ /^(8|\+?7)([\W]*\d){10}$/ 
 			true
 		else 
 			false
@@ -107,15 +56,21 @@ class Employee
 	end
 
 	def self.tel_convert(tel)
-		if !self.tel_check?(tel)
-			raise "Некорректный номер телефона!"
-		else
-			str = ""
-			tel.scan(/\d/){|x| str.concat(x)}
-			str[0] = '7'
-			str.insert(1, '-')
-			str.insert(5, '-')
-			str
+		begin
+			if !self.tel_check?(tel)
+				raise "Некорректный номер телефона!"
+			else
+				str = ""
+				tel.scan(/\d/){|x| str.concat(x)}
+				str[0] = '7'
+				str.insert(1, '-')
+				str.insert(5, '-')
+				str
+			end
+		rescue
+			print("\nВведите корректный номер телефона:")
+			tel = $stdin.gets.chomp
+			retry
 		end
 	end
 
@@ -128,10 +83,16 @@ class Employee
 	end
 
 	def self.email_convert(email)
-		if !self.email_check?(email)
-			raise "Некорректный адрес электронной почты!" 
-		else
-			email.downcase
+		begin
+			if !self.email_check?(email)
+				raise "Некорректный адрес электронной почты!" 
+			else
+				email.downcase
+			end
+		rescue
+			print("\nВведите корректный email:")
+			email = $stdin.gets.chomp
+			retry
 		end
 	end
 
@@ -144,30 +105,36 @@ class Employee
 	end
 
 	def self.fio_convert(fio)
-		if !self.fio_check?(fio)
-			raise "Некорректные имя фамилия отчество!"
-		else
-			temp = fio.downcase.split(/(-)/).map{|x| x.split(" ")}.flatten.map{|x| x.capitalize}
-			i = 0
-			result = ""
-			while i < temp.size
-				case temp[i+1]
-				when "-"
-					result << temp[i] << temp[i+1]
-					i += 2
-				else
-					if i == temp.size - 1
-						result << temp[i]
+		begin
+			if !self.fio_check?(fio)
+				raise "Некорректные имя фамилия отчество!"
+			else
+				temp = fio.downcase.split(/(-)/).map{|x| x.split(" ")}.flatten.map{|x| x.capitalize}
+				i = 0
+				result = ""
+				while i < temp.size
+					case temp[i+1]
+					when "-"
+						result << temp[i] << temp[i+1]
+						i += 2
 					else
-						result << temp[i] << " "
+						if i == temp.size - 1
+							result << temp[i]
+						else
+							result << temp[i] << " "
+						end
+					i += 1
 					end
-				i += 1
 				end
+				if result.count(" ") > 2
+					result[result.rindex(" ") + 1..result.size] = result[result.rindex(" ") + 1..result.size].downcase
+				end
+				result
 			end
-			if result.count(" ") > 2
-				result[result.rindex(" ") + 1..result.size] = result[result.rindex(" ") + 1..result.size].downcase
-			end
-			result
+		rescue
+			print("\nВведите корректные ФИО:")
+			fio = $stdin.gets.chomp
+			retry
 		end
 	end
 
@@ -203,17 +170,23 @@ class Employee
 	end
 
 	def self.year_convert(year)
-		if !self.year_check?(year)
-			raise "Некорректный год!"
-		else
-			temp = year.split(".")
-			if temp[0].length < 2
-				temp[0].insert(0, "0")
+		begin
+			if !self.year_check?(year)
+				raise "Некорректный год!"
+			else
+				temp = year.split(".")
+				if temp[0].length < 2
+					temp[0].insert(0, "0")
+				end
+				if temp[1].length < 2
+					temp[1].insert(0, "0")
+				end
+				new_year = "#{temp[0]}.#{temp[1]}.#{temp[2]}"
 			end
-			if temp[1].length < 2
-				temp[1].insert(0, "0")
-			end
-			new_year = "#{temp[0]}.#{temp[1]}.#{temp[2]}"
+		rescue
+			print("\nВведите корректную дату рождения:")
+			year = $stdin.gets.chomp
+			retry
 		end
 	end
 
@@ -226,17 +199,19 @@ class Employee
 	end
 
 	def self.pass_convert(pass)
-		if !self.pass_check?(pass)
-			raise "Некорректные паспортные данные!"
-		else
-			if pass.split(" ").length < 2
-				pass.insert(4, " ")
+		begin
+			if !self.pass_check?(pass)
+				raise "Некорректные паспортные данные!"
+			else
+				if pass.split(" ").length < 2
+					pass.insert(4, " ")
+				end
+				pass
 			end
-			pass
+		rescue
+			print("\nВведите корректные паспортные данные:")
+			pass = $stdin.gets.chomp
+			retry
 		end
-	end
-
-	def self.test_class()
-
 	end
 end
