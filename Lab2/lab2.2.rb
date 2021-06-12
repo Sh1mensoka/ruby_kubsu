@@ -7,6 +7,17 @@ def read_arr(arr, len)
 	arr
 end
 
+def read_from_file(addr)
+	arr = Array.new
+	file = File.new("#{addr}", "r").each do |line|
+		temp_line = line
+		yield(temp_line) if block_given?
+		arr << temp_line
+	end
+	file.close
+	arr
+end
+
 def max_elems(arr)
 	puts "Количество элементов, расположенных после последнего максимального: #{arr.drop(arr.rindex(arr.max) + 1).length}"
 end
@@ -92,21 +103,14 @@ def search_max_num(str)
 	max
 end
 
-def sort_by_length()
-	mas = Array.new()
-	file1 = File.new("input.txt", "r").each do |line|
-		mas << line
-	end
-	file1.close
+def sort_by_length(file)
+	mas = read_from_file(file)
 	mas.sort!{|x, y| y.length <=> x.length}.inspect
 end
 
-def sort_by_words()
-	mas = Array.new
-	file1 = File.new("input.txt", "r").each do |line|
-		mas << line.split(" ")
-	end
-	file1.close
+def sort_by_words(file)
+	mas = read_from_file(file) {|x| x.split(" ")}
+
 	mas.sort!{|x, y| y.length <=> x.length}.inspect
 end
 
@@ -117,8 +121,9 @@ end
 # puts search_date ("31 марта 2021")
 # puts search_float("3.14 - число пи, а 2.17 - просто число")
 # puts search_rational("-3/7 more than 5/7")
-# puts sort_by_length
-puts sort_by_words
+puts sort_by_length("input.txt")
+
+# puts sort_by_words
 # puts search_max_num("873 часа 3755 студентов писали 2 строки кода")
 # arr = Array.new
 # puts "Введите количество элементов в массиве:"
